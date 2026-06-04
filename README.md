@@ -4,8 +4,8 @@
 |---------|-------------|-------|--------|
 | NYCTaxi | New York City taxi data | 266 | CSV |
 | BJTaxi | Beijing taxi data | 1024 | CSV |
-| CCGTaxi | Chengdu taxi data | 77 | CSV |
-| CCGRide | Chengdu ride data | 77 | CSV |
+| CCGTaxi | Chicago taxi data | 77 | CSV |
+| CCGRide | Chicago ride-haling data | 77 | CSV |
 
 ### Data Format
 
