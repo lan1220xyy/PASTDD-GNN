@@ -16,12 +16,12 @@ from lib.TrainInits import print_model_parameters
 
 
 # *************************************************************************
-Mode = 'train'
+MODE = 'train'
 DEBUG = 'False'
-DATASET = 'NYCTaxi'
+DATASET = 'CCGRide'
 DEVICE = 'cuda:0'
 MODEL = 'PASTDDGNN'
-FLOW = 'inflow'
+FLOW = 'outflow'
 
 from model.PASTDDGNN import *
 from model.BasicTrainer import Trainer
@@ -46,7 +46,8 @@ def masked_mae_loss(scaler, mask_value):
 #parser
 args = argparse.ArgumentParser(description='arguments')
 args.add_argument('--dataset', default=DATASET, type=str)
-args.add_argument('--mode', default=Mode, type=str)
+args.add_argument('--flow', default=FLOW, type=str)
+args.add_argument('--mode', default=MODE, type=str)
 args.add_argument('--device', default=DEVICE, type=str, help='indices of GPUs')
 args.add_argument('--debug', default=DEBUG, type=eval)
 args.add_argument('--model', default=MODEL, type=str)
@@ -103,7 +104,7 @@ else:
     args.device = 'cpu'
 
 train_loader, val_loader, test_loader, scaler, period, unique_periods = get_dataloader(args,
-                                                               FLOW,
+                                                               args.flow,
                                                                normalizer=args.normalizer,
                                                                single=False)
 
@@ -151,7 +152,7 @@ trainer = Trainer(model, loss, optimizer, train_loader, val_loader, test_loader,
 if args.mode == 'train':
     trainer.train()
 elif args.mode == 'test':
-    model.load_state_dict(torch.load('../pre-trained/{}.pth'.format(args.dataset)))
+    model.load_state_dict(torch.load('../pre-trained/{}/{}/best_model.pth'.format(args.dataset, args.flow)))
     print("Load saved model")
     trainer.test(model, trainer.args, test_loader, scaler, trainer.logger)
 else:
