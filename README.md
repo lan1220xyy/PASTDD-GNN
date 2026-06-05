@@ -34,6 +34,13 @@ pip install -r requirements.txt
 
 ```bash
 cd model
-python Run.py
+python Run.py --mode trian
+```
+
+### Testing
+
+```bash
+cd model
+python Run.py --mode test
 ```
 
